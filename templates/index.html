@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Form Deteksi Dini Diabetes</h2>
+    <form method="post">
+        <label>{{ feature_labels["Gender"] }}:</label>
+        <select name="Gender">
+            <option value="Male">Laki-laki</option>
+            <option value="Female">Perempuan</option>
+        </select><br><br>
+
+        <label>{{ feature_labels["Age"] }}:</label>
+        <input type="number" name="Age" min="1" max="120"><br><br>
+
+        {% for field in [
+            "Polyuria", "Polydipsia", "sudden weight loss", "weakness",
+            "Polyphagia", "Genital thrush", "visual blurring", "Itching",
+            "Irritability", "delayed healing", "partial paresis",
+            "muscle stiffness", "Alopecia", "Obesity"
+        ] %}
+            <label>{{ feature_labels[field] }}:</label>
+            <select name="{{ field }}">
+                <option value="Yes" {% if form_data[field] == "Yes" %}selected{% endif %}>Ya</option>
+                <option value="No" {% if form_data[field] == "No" %}selected{% endif %}>Tidak</option>
+            </select><br><br>
+        {% endfor %}
+
+        <input type="submit" value="Prediksi">
+    </form>
+
+    {% if result %}
+        <h3>Hasil Prediksi: <strong>{{ result }}</strong></h3>
+    {% endif %}
+</body>
+
+</html>
